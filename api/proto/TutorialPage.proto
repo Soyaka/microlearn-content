@@ -1,0 +1,32 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+import "google/api/annotations.proto";
+import "content.proto";
+
+
+service TutorialPageService {
+  rpc CreateTutorialPage(TutorialPage) returns (ResOK) {
+    option (google.api.http) = {
+      post: "/page"
+      body    : "*"
+    };
+  }
+  rpc UpdateTutorialPage(TutorialPage) returns (ResOK) {
+    option (google.api.http) = {
+      put: "/page"
+      body    : "*"
+    };
+  }
+  rpc DeleteTutorialPage(ReqID) returns (ResOK) {
+    option (google.api.http) = {
+      delete: "/page/{ID}"
+    };
+  }
+  rpc GetTutorialPage(ReqID) returns (TutorialPage) {
+    option (google.api.http) = {
+      get: "/page/{ID}"
+    };
+  }
+}

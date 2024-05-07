@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+import "google/protobuf/timestamp.proto";
+
+
+
+message ReqID {
+    string ID = 1;
+}
+
+message ResOK {
+    bool OK = 1;
+}
+
+
+message ContentInfo {
+    string title = 2 [json_name = "title"];
+    string description = 3 [json_name = "description"];
+    string content_type = 4 [json_name = "content_type" ];
+    string image_url = 5 [json_name = "image_url" ];
+    string technology = 6 [json_name = "technology" ];
+    string publisher = 7 [json_name = "publisher"];
+    string skill_level = 8 [json_name = "skill_level"];
+    string author = 9 [json_name = "author" ];
+    google.protobuf.Timestamp created_at = 10 [json_name = "created_at" ];
+    google.protobuf.Timestamp updated_at = 11 [json_name = "updated_at"];
+    google.protobuf.Timestamp deleted_at = 12 [json_name = "deleted_at" ];
+    bool is_private = 13 [json_name = "is_private"];
+    bool is_paid = 15 [json_name = "is_paid"];
+    bool is_free = 16 [json_name = "is_free"];
+    bool is_trial = 17 [json_name = "is_trial"];
+    bool is_locked = 18 [json_name = "is_locked" ];
+    bool is_available = 19 [json_name = "is_available"];
+    string language = 20 [json_name = "language" ];
+    repeated string keywords = 21 [json_name = "keywords" ];
+    repeated string tags = 22 [json_name = "tags"];
+    int32 views = 23 [json_name = "views" ];
+    float price = 24 [json_name = "price" ];
+}
+
+message Course {
+    string id = 1 ;
+    ContentInfo content_info = 2 [ json_name = "content_info" ];
+    string duration = 3 [ json_name = "duration" ];
+    int32 nb_pages = 4 [ json_name = "nb_pages" ];
+    repeated string pages_ids = 5 [ json_name = "CoursePages" ];
+}
+ message CoursePage {
+    string id = 1;
+    string title = 2 [ json_name = "title" ];
+    repeated Section sections = 3 [ json_name = "sections" ];
+    Question question = 4 [ json_name = "question" ];
+}
+message Section {
+    string title = 1 ;
+    string description = 2 [ json_name = "description" ];
+    repeated Resource resources = 3 [ json_name = "resources" ];
+    string paragraph = 4 [ json_name = "paragraph" ];
+}
+
+message Resource {
+    string id = 1 ;
+    string name = 2 [ json_name = "name" ];
+    string description = 3 [ json_name = "description" ];
+    string url = 4 [ json_name = "url" ];
+}
+
+message Question {
+    string content = 2 [ json_name = "content" ];
+    repeated string options = 3 [ json_name = "options" ];
+    string answer = 4 [ json_name = "answer" ];
+}
+
+message Podcast {
+    string id = 1 ;
+    string title = 2 [ json_name = "title"];
+    ContentInfo content_info = 4 [ json_name = "content_info" ];
+    string duration = 5  [ json_name = "duration" ];
+    Audio audio = 6 [ json_name = "audio" ];
+}
+
+message Audio {
+    string id = 1 ;
+    string title = 2 [ json_name = "title"];
+}
+
+message Tutorial {
+    string id = 1 ;
+    ContentInfo content_info = 2 [ json_name = "content_info" ];
+    string duration = 3 [ json_name = "duration" ];
+    repeated TutorialPage pages = 4 [ json_name = "pages" ];
+}
+
+message TutorialPage {
+    string id = 1;
+    string title = 2 [ json_name = "title" ];
+    string description = 3 [ json_name = "description" ];
+    repeated Section sections = 4 [ json_name = "sections" ];
+}
+
+message VideoSeries {
+    string id = 1 ;
+    ContentInfo content_info = 2 [ json_name = "content_info" ]  ;
+    string duration = 3 [ json_name = "duration" ];
+    repeated Video videos = 4 [ json_name = "videos" ];
+}
+
+message Video {
+    string id = 1 ;
+    string title = 2 [ json_name = "title" ];
+    string url = 3 [ json_name = "url" ];
+    string description = 4 [ json_name = "description" ];
+    string duration = 5 [ json_name = "duration" ];
+}
+
+message LearningPath {
+    string id = 1;
+    ContentInfo content_info = 2 [ json_name = "content_info" ];
+    string duration = 3  [ json_name = "duration" ];
+    repeated Course courses = 4 [ json_name = "courses" ];
+    repeated VideoSeries videos = 5 [ json_name = "videos" ];
+    repeated Tutorial tutorials = 6 [ json_name = "tutorials" ];
+    repeated Podcast podcasts = 8 [ json_name = "podcasts" ];
+}
+
+
+
+
+
+
+

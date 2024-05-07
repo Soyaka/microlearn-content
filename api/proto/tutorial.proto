@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+import "google/api/annotations.proto";
+import "content.proto";
+
+
+
+
+
+
+/* ---------------------add tutorials services--------------------------------------- */
+
+
+service TutorialService {
+  rpc CreateTutorial(Tutorial) returns (ResOK) {
+    option (google.api.http) = {
+      post: "/tutorial"
+      body    : "*"
+    };
+  }
+  rpc UpdateTutorial(Tutorial) returns (ResOK) {
+    option (google.api.http) = {
+      put: "/tutorial"
+      body    : "*"
+    };
+  }
+  rpc DeleteTutorial(ReqID) returns (ResOK) {
+    option (google.api.http) = {
+      delete: "/tutorial/{ID}"
+    };
+  }
+  rpc GetTutorial(ReqID) returns (Tutorial) {
+    option (google.api.http) = {
+      get: "/tutorial/{ID}"
+    };
+  }
+}

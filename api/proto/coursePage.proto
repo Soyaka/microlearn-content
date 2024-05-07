@@ -1,0 +1,34 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+import "google/api/annotations.proto";
+import "content.proto";
+
+
+
+
+service CoursePageService {
+  rpc CreateCoursePage(CoursePage) returns (ResOK) {
+    option (google.api.http) = {
+      post: "/page"
+      body    : "*"
+    };
+  }
+  rpc UpdateCoursePage(CoursePage) returns (ResOK) {
+    option (google.api.http) = {
+      put: "/page"
+      body    : "*"
+    };
+  }
+  rpc DeleteCoursePage(ReqID) returns (ResOK) {
+    option (google.api.http) = {
+      delete: "/page/{ID}"
+    };
+  }
+  rpc GetCoursePage(ReqID) returns (CoursePage) {
+    option (google.api.http) = {
+      get: "/page/{ID}"
+    };
+  }
+}

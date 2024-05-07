@@ -1,0 +1,34 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+
+import "google/api/annotations.proto";
+import "content.proto";
+
+
+service LearningPathService {
+  rpc CreateLearningPath(LearningPath) returns (ResOK) {
+    option (google.api.http) = {
+      post: "/learning_path"
+      body    : "*"
+    };
+  }
+  rpc UpdateLearningPath(LearningPath) returns (ResOK) {
+    option (google.api.http) = {
+      put: "/learning_path"
+      body    : "*"
+    };
+  }
+  rpc DeleteLearningPath(ReqID) returns (ResOK) {
+    option (google.api.http) = {
+      delete: "/learning_path/{ID}"
+    };
+  }
+  rpc GetLearningPath(ReqID) returns (LearningPath) {
+    option (google.api.http) = {
+      get: "/learning_path/{ID}"
+    };
+  }
+}
+/* ------------------------------------------------------------------- */

@@ -1,0 +1,32 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+import "google/api/annotations.proto";
+import "content.proto";
+
+
+service VideoSeriesService {
+  rpc CreateVideoSeries(VideoSeries) returns (ResOK) {
+    option (google.api.http) = {
+      post: "/video_series"
+      body    : "*"
+    };
+  }
+  rpc UpdateVideoSeries(VideoSeries) returns (ResOK) {
+    option (google.api.http) = {
+      put: "/video_series"
+      body    : "*"
+    };
+  }
+  rpc DeleteVideoSeries(ReqID) returns (ResOK) {
+    option (google.api.http) = {
+      delete: "/video_series/{ID}"
+    };
+  }
+  rpc GetVideoSeries(ReqID) returns (VideoSeries) {
+    option (google.api.http) = {
+      get: "/video_series/{ID}"
+    };
+  }
+}

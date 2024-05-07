@@ -1,0 +1,37 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/Soyaka/content";
+import "google/api/annotations.proto";
+import "content.proto";
+
+
+
+
+
+
+service PodcastService {
+  rpc CreatePodcast(Podcast) returns (ResOK) {
+    option (google.api.http) = {
+      post: "/podcast"
+      body    : "*"
+    };
+  }
+  rpc UpdatePodcast(Podcast) returns (ResOK) {
+    option (google.api.http) = {
+      put: "/podcast"
+      body    : "*"
+    };
+  }
+  rpc DeletePodcast(ReqID) returns (ResOK) {
+    option (google.api.http) = {
+      delete: "/podcast/{ID}"
+    };
+  }
+  rpc GetPodcast(ReqID) returns (Podcast) {
+    option (google.api.http) = {
+      get: "/podcast/{ID}"
+    };
+  }
+}
+/* ------------------------------------------------------------------- */
