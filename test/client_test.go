@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	content "github.com/Soyaka/content/api/protogen/golang"
+	content "github.com/Soyaka/microlearn-content/api/protogen/golang"
 	"google.golang.org/grpc"
 )
 
@@ -203,19 +203,16 @@ func createMockCoursePage() *content.CoursePage {
 			{
 				Title:       "Mock Section Title 1",
 				Description: "Mock Section Description 1",
-				// Add more fields as needed
 			},
 			{
 				Title:       "Mock Section Title 2",
 				Description: "Mock Section Description 2",
-				// Add more fields as needed
 			},
-			// Add more sections if needed
 		},
 		Question: &content.Question{
 			Content: "Mock Question Content",
 			Options: []string{"Option 1", "Option 2"},
-			// Add more fields as needed
+
 		},
 	}
 }
