@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	content "github.com/Soyaka/content/api/protogen/golang"
+	content "github.com/Soyaka/microlearn-content/api/protogen/golang"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 )

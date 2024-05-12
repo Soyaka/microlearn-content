@@ -6,8 +6,8 @@ import (
 	"net"
 	"os"
 
-	content "github.com/Soyaka/content/api/protogen/golang"
-	"github.com/Soyaka/content/internal"
+	content "github.com/Soyaka/microlearn-content/api/protogen/golang"
+	"github.com/Soyaka/microlearn-content/internal"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 )
@@ -22,7 +22,7 @@ func main() {
 	server := grpc.NewServer()
 	ContentService := internal.NewContentService()
 
-	RegisterServerServices(server, &ContentService)
+	RegisterServerServices(server, ContentService)
 
 	log.Printf("server listening at %v", listener.Addr())
 	if err = server.Serve(listener); err != nil {

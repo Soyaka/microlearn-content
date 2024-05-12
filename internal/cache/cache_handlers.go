@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	content "github.com/Soyaka/content/api/protogen/golang"
+	content "github.com/Soyaka/microlearn-content/api/protogen/golang"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
