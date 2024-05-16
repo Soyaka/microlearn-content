@@ -26,34 +26,37 @@ const (
 
 /* CoursePage Database Handlers */
 
-func (c *Service) CreateCoursePage(ctx context.Context, in *content.CoursePage) (*content.ResOK, error) {
+func (c *Service) CreateCoursePage(ctx context.Context, in *content.CoursePage) (*content.ReqID, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
+	if in == nil {
+		return nil, errors.New("course page cannot be nil")
+	}
 	result, err := c.Client.Database(DATA).Collection(CoursePageCol).InsertOne(context, in)
 	if err != nil || result.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
-func (c *Service) UpdateCoursePage(ctx context.Context, in *content.CoursePage) (*content.ResOK, error) {
+func (c *Service) UpdateCoursePage(ctx context.Context, in *content.CoursePage) (*content.ReqID, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(CoursePageCol).UpdateOne(context, bson.M{"_id": in.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(CoursePageCol).UpdateOne(context, bson.M{"_id": in.GetId()}, in)
 	if err != nil || result.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetId()}, nil
 }
 
-func (c *Service) DeleteCoursePage(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeleteCoursePage(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(CoursePageCol).DeleteOne(context, bson.M{"_id": in.ID})
+	result, err := c.Client.Database(DATA).Collection(CoursePageCol).DeleteOne(context, bson.M{"_id": in.GetID()})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetID()}, nil
 }
 
 func (c *Service) GetCoursePage(ctx context.Context, in *content.ReqID) (*content.CoursePage, error) {
@@ -77,15 +80,18 @@ func (c *Service) GetCoursePage(ctx context.Context, in *content.ReqID) (*conten
 }
 
 // Tutorial pages handlers
-func (c *Service) CreateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ResOK, error) {
+func (c *Service) CreateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ReqID, error) {
 
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	res, err := c.Client.Database(DATA).Collection(TutorialPageCol).InsertOne(context, in)
-	if err != nil || res.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+	if in == nil {
+		return nil, errors.New("tutorial page cannot be nil")
 	}
-	return &content.ResOK{OK: true}, nil
+	result, err := c.Client.Database(DATA).Collection(TutorialPageCol).InsertOne(context, in)
+	if err != nil || result.InsertedID == nil {
+		return nil, err
+	}
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
 func (c *Service) GetTutorialPage(ctx context.Context, in *content.ReqID) (*content.TutorialPage, error) {
@@ -106,64 +112,69 @@ func (c *Service) GetTutorialPage(ctx context.Context, in *content.ReqID) (*cont
 	return TutorialPage, err
 }
 
-func (c *Service) DeleteTutorialPage(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeleteTutorialPage(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(TutorialPageCol).DeleteOne(context, bson.M{"_id": in.ID})
+	result, err := c.Client.Database(DATA).Collection(TutorialPageCol).DeleteOne(context, bson.M{"_id": in.GetID()})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetID()}, nil
 }
 
-func (c *Service) UpdateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ResOK, error) {
+func (c *Service) UpdateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	res, err := c.Client.Database(DATA).Collection(TutorialPageCol).UpdateOne(context, bson.M{"_id": in.Id}, in)
-	if err != nil || res.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+	result, err := c.Client.Database(DATA).Collection(TutorialPageCol).UpdateOne(context, bson.M{"_id": in.GetId()}, in)
+	if err != nil || result.MatchedCount == 0 {
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetId()}, nil
 }
 
 /* CourseSeries Database Handlers */
 
-func (c *Service) CreateCourseSeries(ctx context.Context, in *content.Course) (*content.ResOK, error) {
+func (c *Service) CreateCourseSeries(ctx context.Context, in *content.Course) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
 	result, err := c.Client.Database(DATA).Collection(CourseCol).InsertOne(context, in)
 	if err != nil || result.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
-func (c *Service) UpdateCourseSeries(ctx context.Context, in *content.Course) (*content.ResOK, error) {
+func (c *Service) UpdateCourseSeries(ctx context.Context, in *content.Course) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-
-	result, err := c.Client.Database(DATA).Collection(CourseCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(CourseCol).UpdateOne(context, bson.M{"_id": in.GetContentInfo().GetId()}, in)
 	if err != nil || result.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetContentInfo().GetId()}, nil
+
 }
 
-func (c *Service) DeleteCourseSeries(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeleteCourseSeries(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(CourseCol).DeleteOne(context, bson.M{"_id": in.ID})
+	result, err := c.Client.Database(DATA).Collection(CourseCol).DeleteOne(context, bson.M{"_id": in.GetID()})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetID()}, nil
 }
 
 func (c *Service) GetCourseSeries(ctx context.Context, in *content.ReqID) (*content.Course, error) {
 	var res *content.Course
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result := c.Client.Database(DATA).Collection(CourseCol).FindOne(ctox, bson.M{"_id": in.ID})
+	result := c.Client.Database(DATA).Collection(CourseCol).FindOne(ctox, bson.M{"_id": in.GetID()})
 	if result.Err() != nil {
 		return nil, result.Err()
 	}
@@ -180,34 +191,37 @@ func (c *Service) GetCourseSeries(ctx context.Context, in *content.ReqID) (*cont
 
 /* VideoSeries Database Handlers */
 
-func (c *Service) CreateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ResOK, error) {
+func (c *Service) CreateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
 	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).InsertOne(context, in)
 	if err != nil || result.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
-func (c *Service) UpdateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ResOK, error) {
+func (c *Service) UpdateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).UpdateOne(context, bson.M{"_id": in.GetContentInfo().GetId()}, in)
 	if err != nil || result.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetContentInfo().GetId()}, nil
 }
 
-func (c *Service) DeleteVideoSeries(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeleteVideoSeries(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).DeleteOne(context, bson.M{"_id": in.ID})
+	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).DeleteOne(context, bson.M{"_id": in.GetID()})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetID()}, nil
 }
 
 func (c *Service) GetVideoSeries(ctx context.Context, in *content.ReqID) (*content.VideoSeries, error) {
@@ -236,34 +250,37 @@ func (c *Service) GetVideoSeries(ctx context.Context, in *content.ReqID) (*conte
 
 /* Learning Path Database Handlers */
 
-func (c *Service) CreateLearningPath(ctx context.Context, in *content.LearningPath) (*content.ResOK, error) {
+func (c *Service) CreateLearningPath(ctx context.Context, in *content.LearningPath) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
 	result, err := c.Client.Database(DATA).Collection(LearningCol).InsertOne(context, in)
 	if err != nil || result.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
-func (c *Service) UpdateLearningPath(ctx context.Context, in *content.LearningPath) (*content.ResOK, error) {
+func (c *Service) UpdateLearningPath(ctx context.Context, in *content.LearningPath) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(LearningCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(LearningCol).UpdateOne(context, bson.M{"_id": in.GetContentInfo().GetId()}, in)
 	if err != nil || result.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetContentInfo().GetId()}, nil
 }
 
-func (c *Service) DeleteLearningPath(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeleteLearningPath(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(LearningCol).DeleteOne(context, bson.M{"_id": in.ID})
+	result, err := c.Client.Database(DATA).Collection(LearningCol).DeleteOne(context, bson.M{"_id": in.GetID()})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetID()}, nil
 }
 
 func (c *Service) GetLearningPath(ctx context.Context, in *content.ReqID) (*content.LearningPath, error) {
@@ -295,37 +312,37 @@ func (c *Service) GetLearningPath(ctx context.Context, in *content.ReqID) (*cont
 
 /* Podcast Database Handlers */
 
-func (c *Service) CreatePodcast(ctx context.Context, in *content.Podcast) (*content.ResOK, error) {
+func (c *Service) CreatePodcast(ctx context.Context, in *content.Podcast) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	if in == nil {
-		return nil, errors.New("podcast cannot be nil")
-	}
 	result, err := c.Client.Database(DATA).Collection(PodcastCol).InsertOne(context, in)
 	if err != nil || result.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
-func (c *Service) UpdatePodcast(ctx context.Context, in *content.Podcast) (*content.ResOK, error) {
+func (c *Service) UpdatePodcast(ctx context.Context, in *content.Podcast) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(PodcastCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(PodcastCol).UpdateOne(context, bson.M{"_id": in.GetContentInfo().GetId()}, in)
 	if err != nil || result.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetContentInfo().GetId()}, nil
 }
 
-func (c *Service) DeletePodcast(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeletePodcast(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(PodcastCol).DeleteOne(context, bson.M{"_id": in.ID})
+	result, err := c.Client.Database(DATA).Collection(PodcastCol).DeleteOne(context, bson.M{"_id": in.GetID()})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.GetID()}, nil
 }
 
 func (c *Service) GetPodcast(ctx context.Context, in *content.ReqID) (*content.Podcast, error) {
@@ -357,34 +374,37 @@ func (c *Service) GetPodcast(ctx context.Context, in *content.ReqID) (*content.P
 
 /* Tutorials*/
 
-func (c *Service) CreateTutorial(ctx context.Context, in *content.Tutorial) (*content.ResOK, error) {
+func (c *Service) CreateTutorial(ctx context.Context, in *content.Tutorial) (*content.ReqID, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
+	if in == nil {
+		return nil, errors.New("tutorial cannot be nil")
+	}
 	result, err := c.Client.Database(DATA).Collection(TutorialCol).InsertOne(context, in)
 	if err != nil || result.InsertedID == nil {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: result.InsertedID.(string)}, nil
 }
 
-func (c *Service) UpdateTutorial(ctx context.Context, in *content.Tutorial) (*content.ResOK, error) {
+func (c *Service) UpdateTutorial(ctx context.Context, in *content.Tutorial) (*content.ReqID, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(TutorialCol).UpdateOne(context, in.ContentInfo.Id, in)
+	result, err := c.Client.Database(DATA).Collection(TutorialCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
 	if err != nil || result.MatchedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.ContentInfo.Id}, nil
 }
 
-func (c *Service) DeleteTutorial(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *Service) DeleteTutorial(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
 	result, err := c.Client.Database(DATA).Collection(TutorialCol).DeleteOne(context, bson.M{"_id": in.ID})
 	if err != nil || result.DeletedCount == 0 {
-		return &content.ResOK{OK: false}, err
+		return nil, err
 	}
-	return &content.ResOK{OK: true}, nil
+	return &content.ReqID{ID: in.ID}, nil
 }
 
 func (c *Service) GetTutorial(ctx context.Context, in *content.ReqID) (*content.Tutorial, error) {

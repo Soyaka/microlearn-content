@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TutorialServiceClient interface {
-	CreateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ResOK, error)
-	UpdateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ResOK, error)
-	DeleteTutorial(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ReqID, error)
+	UpdateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ReqID, error)
+	DeleteTutorial(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetTutorial(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*Tutorial, error)
 }
 
@@ -36,8 +36,8 @@ func NewTutorialServiceClient(cc grpc.ClientConnInterface) TutorialServiceClient
 	return &tutorialServiceClient{cc}
 }
 
-func (c *tutorialServiceClient) CreateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *tutorialServiceClient) CreateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/TutorialService/CreateTutorial", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *tutorialServiceClient) CreateTutorial(ctx context.Context, in *Tutorial
 	return out, nil
 }
 
-func (c *tutorialServiceClient) UpdateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *tutorialServiceClient) UpdateTutorial(ctx context.Context, in *Tutorial, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/TutorialService/UpdateTutorial", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *tutorialServiceClient) UpdateTutorial(ctx context.Context, in *Tutorial
 	return out, nil
 }
 
-func (c *tutorialServiceClient) DeleteTutorial(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *tutorialServiceClient) DeleteTutorial(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/TutorialService/DeleteTutorial", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *tutorialServiceClient) GetTutorial(ctx context.Context, in *ReqID, opts
 // All implementations must embed UnimplementedTutorialServiceServer
 // for forward compatibility
 type TutorialServiceServer interface {
-	CreateTutorial(context.Context, *Tutorial) (*ResOK, error)
-	UpdateTutorial(context.Context, *Tutorial) (*ResOK, error)
-	DeleteTutorial(context.Context, *ReqID) (*ResOK, error)
+	CreateTutorial(context.Context, *Tutorial) (*ReqID, error)
+	UpdateTutorial(context.Context, *Tutorial) (*ReqID, error)
+	DeleteTutorial(context.Context, *ReqID) (*ReqID, error)
 	GetTutorial(context.Context, *ReqID) (*Tutorial, error)
 	mustEmbedUnimplementedTutorialServiceServer()
 }
@@ -87,13 +87,13 @@ type TutorialServiceServer interface {
 type UnimplementedTutorialServiceServer struct {
 }
 
-func (UnimplementedTutorialServiceServer) CreateTutorial(context.Context, *Tutorial) (*ResOK, error) {
+func (UnimplementedTutorialServiceServer) CreateTutorial(context.Context, *Tutorial) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTutorial not implemented")
 }
-func (UnimplementedTutorialServiceServer) UpdateTutorial(context.Context, *Tutorial) (*ResOK, error) {
+func (UnimplementedTutorialServiceServer) UpdateTutorial(context.Context, *Tutorial) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTutorial not implemented")
 }
-func (UnimplementedTutorialServiceServer) DeleteTutorial(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedTutorialServiceServer) DeleteTutorial(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTutorial not implemented")
 }
 func (UnimplementedTutorialServiceServer) GetTutorial(context.Context, *ReqID) (*Tutorial, error) {

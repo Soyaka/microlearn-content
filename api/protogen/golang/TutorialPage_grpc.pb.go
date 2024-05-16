@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TutorialPageServiceClient interface {
-	CreateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ResOK, error)
-	UpdateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ResOK, error)
-	DeleteTutorialPage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ReqID, error)
+	UpdateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ReqID, error)
+	DeleteTutorialPage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetTutorialPage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*TutorialPage, error)
 }
 
@@ -36,8 +36,8 @@ func NewTutorialPageServiceClient(cc grpc.ClientConnInterface) TutorialPageServi
 	return &tutorialPageServiceClient{cc}
 }
 
-func (c *tutorialPageServiceClient) CreateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *tutorialPageServiceClient) CreateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/TutorialPageService/CreateTutorialPage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *tutorialPageServiceClient) CreateTutorialPage(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *tutorialPageServiceClient) UpdateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *tutorialPageServiceClient) UpdateTutorialPage(ctx context.Context, in *TutorialPage, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/TutorialPageService/UpdateTutorialPage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *tutorialPageServiceClient) UpdateTutorialPage(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *tutorialPageServiceClient) DeleteTutorialPage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *tutorialPageServiceClient) DeleteTutorialPage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/TutorialPageService/DeleteTutorialPage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *tutorialPageServiceClient) GetTutorialPage(ctx context.Context, in *Req
 // All implementations must embed UnimplementedTutorialPageServiceServer
 // for forward compatibility
 type TutorialPageServiceServer interface {
-	CreateTutorialPage(context.Context, *TutorialPage) (*ResOK, error)
-	UpdateTutorialPage(context.Context, *TutorialPage) (*ResOK, error)
-	DeleteTutorialPage(context.Context, *ReqID) (*ResOK, error)
+	CreateTutorialPage(context.Context, *TutorialPage) (*ReqID, error)
+	UpdateTutorialPage(context.Context, *TutorialPage) (*ReqID, error)
+	DeleteTutorialPage(context.Context, *ReqID) (*ReqID, error)
 	GetTutorialPage(context.Context, *ReqID) (*TutorialPage, error)
 	mustEmbedUnimplementedTutorialPageServiceServer()
 }
@@ -87,13 +87,13 @@ type TutorialPageServiceServer interface {
 type UnimplementedTutorialPageServiceServer struct {
 }
 
-func (UnimplementedTutorialPageServiceServer) CreateTutorialPage(context.Context, *TutorialPage) (*ResOK, error) {
+func (UnimplementedTutorialPageServiceServer) CreateTutorialPage(context.Context, *TutorialPage) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTutorialPage not implemented")
 }
-func (UnimplementedTutorialPageServiceServer) UpdateTutorialPage(context.Context, *TutorialPage) (*ResOK, error) {
+func (UnimplementedTutorialPageServiceServer) UpdateTutorialPage(context.Context, *TutorialPage) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTutorialPage not implemented")
 }
-func (UnimplementedTutorialPageServiceServer) DeleteTutorialPage(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedTutorialPageServiceServer) DeleteTutorialPage(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTutorialPage not implemented")
 }
 func (UnimplementedTutorialPageServiceServer) GetTutorialPage(context.Context, *ReqID) (*TutorialPage, error) {

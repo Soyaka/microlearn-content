@@ -24,37 +24,40 @@ func (p *ContentService) GetPodcast(ctx context.Context, in *content.ReqID) (*co
 	return podcast, nil
 }
 
-func (p *ContentService) CreatePodcast(ctx context.Context, in *content.Podcast) (*content.ResOK, error) {
+func (p *ContentService) CreatePodcast(ctx context.Context, in *content.Podcast) (*content.ReqID, error) {
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := p.Db.CreatePodcast(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
-	}
-	p.Cache.SetPodcastToCache(ctox, in)
-	return ok, nil
-}
-
-func (p *ContentService) UpdatePodcast(ctx context.Context, in *content.Podcast) (*content.ResOK, error) {
-	ctox, cancel := context.WithTimeout(ctx, TimeOut)
-	defer cancel()
-	ok, err := p.Db.UpdatePodcast(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	res, err := p.Db.CreatePodcast(ctox, in)
+	if err != nil || res.ID == "" {
+		return nil, err
 	}
 
 	p.Cache.SetPodcastToCache(ctox, in)
 
-	return ok, nil
+	return res, nil
+
 }
 
-func (p *ContentService) DeletePodcast(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (p *ContentService) UpdatePodcast(ctx context.Context, in *content.Podcast) (*content.ReqID, error) {
+
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := p.Db.DeletePodcast(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	res, err := p.Db.UpdatePodcast(ctox, in)
+	if err != nil || res.ID == "" {
+		return nil, err
 	}
-	p.Cache.DeleteFromCache(ctox, in.ID)
-	return ok, nil
+	return res, nil
+}
+
+func (p *ContentService) DeletePodcast(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
+	ctox, cancel := context.WithTimeout(ctx, TimeOut)
+	defer cancel()
+	res, err := p.Db.DeletePodcast(ctox, in)
+	if err != nil || res.ID == "" {
+		return nil, err
+	}
+
+	p.Cache.DeleteFromCache(ctox, in.GetID())
+	return res, nil
 }

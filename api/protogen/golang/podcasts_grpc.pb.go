@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PodcastServiceClient interface {
-	CreatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ResOK, error)
-	UpdatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ResOK, error)
-	DeletePodcast(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ReqID, error)
+	UpdatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ReqID, error)
+	DeletePodcast(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetPodcast(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*Podcast, error)
 }
 
@@ -36,8 +36,8 @@ func NewPodcastServiceClient(cc grpc.ClientConnInterface) PodcastServiceClient {
 	return &podcastServiceClient{cc}
 }
 
-func (c *podcastServiceClient) CreatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *podcastServiceClient) CreatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/PodcastService/CreatePodcast", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *podcastServiceClient) CreatePodcast(ctx context.Context, in *Podcast, o
 	return out, nil
 }
 
-func (c *podcastServiceClient) UpdatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *podcastServiceClient) UpdatePodcast(ctx context.Context, in *Podcast, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/PodcastService/UpdatePodcast", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *podcastServiceClient) UpdatePodcast(ctx context.Context, in *Podcast, o
 	return out, nil
 }
 
-func (c *podcastServiceClient) DeletePodcast(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *podcastServiceClient) DeletePodcast(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/PodcastService/DeletePodcast", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *podcastServiceClient) GetPodcast(ctx context.Context, in *ReqID, opts .
 // All implementations must embed UnimplementedPodcastServiceServer
 // for forward compatibility
 type PodcastServiceServer interface {
-	CreatePodcast(context.Context, *Podcast) (*ResOK, error)
-	UpdatePodcast(context.Context, *Podcast) (*ResOK, error)
-	DeletePodcast(context.Context, *ReqID) (*ResOK, error)
+	CreatePodcast(context.Context, *Podcast) (*ReqID, error)
+	UpdatePodcast(context.Context, *Podcast) (*ReqID, error)
+	DeletePodcast(context.Context, *ReqID) (*ReqID, error)
 	GetPodcast(context.Context, *ReqID) (*Podcast, error)
 	mustEmbedUnimplementedPodcastServiceServer()
 }
@@ -87,13 +87,13 @@ type PodcastServiceServer interface {
 type UnimplementedPodcastServiceServer struct {
 }
 
-func (UnimplementedPodcastServiceServer) CreatePodcast(context.Context, *Podcast) (*ResOK, error) {
+func (UnimplementedPodcastServiceServer) CreatePodcast(context.Context, *Podcast) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePodcast not implemented")
 }
-func (UnimplementedPodcastServiceServer) UpdatePodcast(context.Context, *Podcast) (*ResOK, error) {
+func (UnimplementedPodcastServiceServer) UpdatePodcast(context.Context, *Podcast) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePodcast not implemented")
 }
-func (UnimplementedPodcastServiceServer) DeletePodcast(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedPodcastServiceServer) DeletePodcast(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePodcast not implemented")
 }
 func (UnimplementedPodcastServiceServer) GetPodcast(context.Context, *ReqID) (*Podcast, error) {

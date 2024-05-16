@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"errors"
 
 	content "github.com/Soyaka/microlearn-content/api/protogen/golang"
 )
@@ -21,44 +22,52 @@ func (c *ContentService) GetVideoSeries(ctx context.Context, in *content.ReqID) 
 	videoSeries, err = c.Db.GetVideoSeries(ctox, in)
 
 	if err == nil && videoSeries != nil {
-		 c.Cache.SetVideoSeriesToCache(ctox, videoSeries)
+		c.Cache.SetVideoSeriesToCache(ctox, videoSeries)
 		return videoSeries, nil
 	}
 	return videoSeries, err
 }
 
-func (c *ContentService) CreateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ResOK, error) {
+func (c *ContentService) CreateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ReqID, error) {
+
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.CreateVideoSeries(ctox, in)
-
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	if in == nil {
+		return &content.ReqID{ID: ""}, errors.New("video series cannot be nil")
 	}
-
-	c.Cache.SetVideoSeriesToCache(ctox, in)
-
-	return ok, nil
-}
-func (c *ContentService) UpdateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ResOK, error) {
-	ctox, cancel := context.WithTimeout(ctx, TimeOut)
-	defer cancel()
-
-	ok, err := c.Db.UpdateVideoSeries(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	result, err := c.Db.CreateVideoSeries(ctox, in)
+	if err != nil || result == nil {
+		return &content.ReqID{ID: ""}, err
 	}
 	c.Cache.SetVideoSeriesToCache(ctox, in)
-	return ok, nil
+	return result, nil
 }
+func (c *ContentService) UpdateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ReqID, error) {
 
-func (c *ContentService) DeleteVideoSeries(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok ,err := c.Db.DeleteVideoSeries(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	if in == nil {
+		return &content.ReqID{ID: ""}, errors.New("video series cannot be nil")
 	}
-	c.Cache.DeleteFromCache(ctox, in.ID)
-	return ok, nil
+	result, err := c.Db.UpdateVideoSeries(ctox, in)
+	if err != nil || result == nil {
+		return &content.ReqID{ID: ""}, err
+	}
+	c.Cache.SetVideoSeriesToCache(ctox, in)
+	return result, nil
+}
+
+func (c *ContentService) DeleteVideoSeries(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
+	ctox, cancel := context.WithTimeout(ctx, TimeOut)
+	defer cancel()
+	if in == nil {
+		return &content.ReqID{ID: ""}, errors.New("video series cannot be nil")
+	}
+	result, err := c.Db.DeleteVideoSeries(ctox, in)
+	if err != nil || result == nil {
+		return &content.ReqID{ID: ""}, err
+	}
+	c.Cache.DeleteFromCache(ctox, in.GetID())
+	return result, nil
 }

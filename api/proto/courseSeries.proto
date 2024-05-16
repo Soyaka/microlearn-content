@@ -8,19 +8,19 @@ import "content.proto";
 
 /* ---------------------add courses services--------------------------------------- */
 service CourseSeriesService {
-  rpc CreateCourseSeries(Course) returns (ResOK) {
+  rpc CreateCourseSeries(Course) returns (ReqID) {
     option (google.api.http) = {
       post: "/course_series"
       body    : "*"
     };
   }
-  rpc UpdateCourseSeries(Course) returns (ResOK) {
+  rpc UpdateCourseSeries(Course) returns (ReqID) {
     option (google.api.http) = {
       put: "/course_series"
       body    : "*"
     };
   }
-  rpc DeleteCourseSeries(ReqID) returns (ResOK) {
+  rpc DeleteCourseSeries(ReqID) returns (ReqID) {
     option (google.api.http) = {
       delete: "/course_series/{ID}"
     };

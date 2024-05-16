@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CourseSeriesServiceClient interface {
-	CreateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ResOK, error)
-	UpdateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ResOK, error)
-	DeleteCourseSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ReqID, error)
+	UpdateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ReqID, error)
+	DeleteCourseSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetCourseSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*Course, error)
 }
 
@@ -36,8 +36,8 @@ func NewCourseSeriesServiceClient(cc grpc.ClientConnInterface) CourseSeriesServi
 	return &courseSeriesServiceClient{cc}
 }
 
-func (c *courseSeriesServiceClient) CreateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *courseSeriesServiceClient) CreateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/CourseSeriesService/CreateCourseSeries", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *courseSeriesServiceClient) CreateCourseSeries(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *courseSeriesServiceClient) UpdateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *courseSeriesServiceClient) UpdateCourseSeries(ctx context.Context, in *Course, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/CourseSeriesService/UpdateCourseSeries", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *courseSeriesServiceClient) UpdateCourseSeries(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *courseSeriesServiceClient) DeleteCourseSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *courseSeriesServiceClient) DeleteCourseSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/CourseSeriesService/DeleteCourseSeries", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *courseSeriesServiceClient) GetCourseSeries(ctx context.Context, in *Req
 // All implementations must embed UnimplementedCourseSeriesServiceServer
 // for forward compatibility
 type CourseSeriesServiceServer interface {
-	CreateCourseSeries(context.Context, *Course) (*ResOK, error)
-	UpdateCourseSeries(context.Context, *Course) (*ResOK, error)
-	DeleteCourseSeries(context.Context, *ReqID) (*ResOK, error)
+	CreateCourseSeries(context.Context, *Course) (*ReqID, error)
+	UpdateCourseSeries(context.Context, *Course) (*ReqID, error)
+	DeleteCourseSeries(context.Context, *ReqID) (*ReqID, error)
 	GetCourseSeries(context.Context, *ReqID) (*Course, error)
 	mustEmbedUnimplementedCourseSeriesServiceServer()
 }
@@ -87,13 +87,13 @@ type CourseSeriesServiceServer interface {
 type UnimplementedCourseSeriesServiceServer struct {
 }
 
-func (UnimplementedCourseSeriesServiceServer) CreateCourseSeries(context.Context, *Course) (*ResOK, error) {
+func (UnimplementedCourseSeriesServiceServer) CreateCourseSeries(context.Context, *Course) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCourseSeries not implemented")
 }
-func (UnimplementedCourseSeriesServiceServer) UpdateCourseSeries(context.Context, *Course) (*ResOK, error) {
+func (UnimplementedCourseSeriesServiceServer) UpdateCourseSeries(context.Context, *Course) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCourseSeries not implemented")
 }
-func (UnimplementedCourseSeriesServiceServer) DeleteCourseSeries(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedCourseSeriesServiceServer) DeleteCourseSeries(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCourseSeries not implemented")
 }
 func (UnimplementedCourseSeriesServiceServer) GetCourseSeries(context.Context, *ReqID) (*Course, error) {

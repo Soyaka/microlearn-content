@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CoursePageServiceClient interface {
-	CreateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ResOK, error)
-	UpdateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ResOK, error)
-	DeleteCoursePage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ReqID, error)
+	UpdateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ReqID, error)
+	DeleteCoursePage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetCoursePage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*CoursePage, error)
 }
 
@@ -36,8 +36,8 @@ func NewCoursePageServiceClient(cc grpc.ClientConnInterface) CoursePageServiceCl
 	return &coursePageServiceClient{cc}
 }
 
-func (c *coursePageServiceClient) CreateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *coursePageServiceClient) CreateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/CoursePageService/CreateCoursePage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *coursePageServiceClient) CreateCoursePage(ctx context.Context, in *Cour
 	return out, nil
 }
 
-func (c *coursePageServiceClient) UpdateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *coursePageServiceClient) UpdateCoursePage(ctx context.Context, in *CoursePage, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/CoursePageService/UpdateCoursePage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *coursePageServiceClient) UpdateCoursePage(ctx context.Context, in *Cour
 	return out, nil
 }
 
-func (c *coursePageServiceClient) DeleteCoursePage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *coursePageServiceClient) DeleteCoursePage(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/CoursePageService/DeleteCoursePage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *coursePageServiceClient) GetCoursePage(ctx context.Context, in *ReqID, 
 // All implementations must embed UnimplementedCoursePageServiceServer
 // for forward compatibility
 type CoursePageServiceServer interface {
-	CreateCoursePage(context.Context, *CoursePage) (*ResOK, error)
-	UpdateCoursePage(context.Context, *CoursePage) (*ResOK, error)
-	DeleteCoursePage(context.Context, *ReqID) (*ResOK, error)
+	CreateCoursePage(context.Context, *CoursePage) (*ReqID, error)
+	UpdateCoursePage(context.Context, *CoursePage) (*ReqID, error)
+	DeleteCoursePage(context.Context, *ReqID) (*ReqID, error)
 	GetCoursePage(context.Context, *ReqID) (*CoursePage, error)
 	mustEmbedUnimplementedCoursePageServiceServer()
 }
@@ -87,13 +87,13 @@ type CoursePageServiceServer interface {
 type UnimplementedCoursePageServiceServer struct {
 }
 
-func (UnimplementedCoursePageServiceServer) CreateCoursePage(context.Context, *CoursePage) (*ResOK, error) {
+func (UnimplementedCoursePageServiceServer) CreateCoursePage(context.Context, *CoursePage) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCoursePage not implemented")
 }
-func (UnimplementedCoursePageServiceServer) UpdateCoursePage(context.Context, *CoursePage) (*ResOK, error) {
+func (UnimplementedCoursePageServiceServer) UpdateCoursePage(context.Context, *CoursePage) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCoursePage not implemented")
 }
-func (UnimplementedCoursePageServiceServer) DeleteCoursePage(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedCoursePageServiceServer) DeleteCoursePage(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCoursePage not implemented")
 }
 func (UnimplementedCoursePageServiceServer) GetCoursePage(context.Context, *ReqID) (*CoursePage, error) {

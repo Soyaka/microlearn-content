@@ -29,39 +29,38 @@ func (c *ContentService) GetTutorial(ctx context.Context, in *content.ReqID) (*c
 	return tutorial, err
 }
 
-func (c *ContentService) CreateTutorial(ctx context.Context, in *content.Tutorial) (*content.ResOK, error) {
+func (c *ContentService) CreateTutorial(ctx context.Context, in *content.Tutorial) (*content.ReqID, error) {
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.CreateTutorial(ctox, in)
-
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
-	}
-
-	c.Cache.SetTutorialToCache(ctox, in)
-	return ok, nil
-}
-
-func (c *ContentService) UpdateTutorial(ctx context.Context, in *content.Tutorial) (*content.ResOK, error) {
-	ctox, cancel := context.WithTimeout(ctx, TimeOut)
-	defer cancel()
-	ok, err := c.Db.UpdateTutorial(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	id, err := c.Db.CreateTutorial(ctox, in)
+	if err != nil || id == nil {
+		return nil, err
 	}
 	c.Cache.SetTutorialToCache(ctox, in)
-	return ok, nil
+	return id, nil
 }
 
-func (c *ContentService) DeleteTutorial(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *ContentService) UpdateTutorial(ctx context.Context, in *content.Tutorial) (*content.ReqID, error) {
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.DeleteTutorial(ctox, in)
+	id, err := c.Db.UpdateTutorial(ctox, in)
+	if err != nil || id == nil {
+		return nil, err
+	}
+	c.Cache.SetTutorialToCache(ctox, in)
+	return id, nil
+}
 
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+func (c *ContentService) DeleteTutorial(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+	ctox, cancel := context.WithTimeout(ctx, TimeOut)
+	defer cancel()
+
+	res, err := c.Db.DeleteTutorial(ctox, in)
+	if err != nil || res == nil {
+
+		return nil, err
 	}
 
-	c.Cache.DeleteFromCache(ctox, in.ID)
-	return ok, nil
+	 c.Cache.DeleteFromCache(ctox, in.ID)
+	return res, nil
 }

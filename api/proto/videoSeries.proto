@@ -7,19 +7,19 @@ import "content.proto";
 
 
 service VideoSeriesService {
-  rpc CreateVideoSeries(VideoSeries) returns (ResOK) {
+  rpc CreateVideoSeries(VideoSeries) returns (ReqID) {
     option (google.api.http) = {
       post: "/video_series"
       body    : "*"
     };
   }
-  rpc UpdateVideoSeries(VideoSeries) returns (ResOK) {
+  rpc UpdateVideoSeries(VideoSeries) returns (ReqID) {
     option (google.api.http) = {
       put: "/video_series"
       body    : "*"
     };
   }
-  rpc DeleteVideoSeries(ReqID) returns (ResOK) {
+  rpc DeleteVideoSeries(ReqID) returns (ReqID) {
     option (google.api.http) = {
       delete: "/video_series/{ID}"
     };

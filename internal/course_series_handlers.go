@@ -11,41 +11,40 @@ var (
 	TimeOut = 300 * time.Millisecond
 )
 
-func (c *ContentService) CreateCourseSeries(ctx context.Context, in *content.Course) (*content.ResOK, error) {
+func (c *ContentService) CreateCourseSeries(ctx context.Context, in *content.Course) (*content.ReqID, error) {
+
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.CreateCourseSeries(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
-	}
-
-	c.Cache.SetCourseSeriesToCache(ctox, in)
-	return ok, nil
-}
-
-func (c *ContentService) UpdateCourseSeries(ctx context.Context, in *content.Course) (*content.ResOK, error) {
-	ctox, cancel := context.WithTimeout(ctx, TimeOut)
-	defer cancel()
-	ok, err := c.Db.UpdateCourseSeries(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	id, err := c.Db.CreateCourseSeries(ctox, in)
+	if err != nil {
+		return nil, err
 	}
 	c.Cache.SetCourseSeriesToCache(ctox, in)
-	return ok, nil
+	return id, nil
 }
 
-func (c *ContentService) DeleteCourseSeries(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *ContentService) UpdateCourseSeries(ctx context.Context, in *content.Course) (*content.ReqID, error) {
+
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.DeleteCourseSeries(ctox, in)
-
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	id, err := c.Db.UpdateCourseSeries(ctox, in)
+	if err != nil {
+		return nil, err
 	}
+	c.Cache.SetCourseSeriesToCache(ctox, in)
+	return id, nil
+}
 
-	c.Cache.DeleteFromCache(ctox, in.ID)
+func (c *ContentService) DeleteCourseSeries(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
 
-	return ok, nil
+	ctox, cancel := context.WithTimeout(ctx, TimeOut)
+	defer cancel()
+	id, err := c.Db.DeleteCourseSeries(ctox, in)
+	if err != nil {
+		return nil, err
+	}
+	c.Cache.DeleteFromCache(ctox, in.GetID())
+	return id, nil
 }
 
 func (c *ContentService) GetCourseSeries(ctx context.Context, in *content.ReqID) (*content.Course, error) {

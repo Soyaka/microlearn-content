@@ -8,19 +8,19 @@ import "content.proto";
 
 
 service LearningPathService {
-  rpc CreateLearningPath(LearningPath) returns (ResOK) {
+  rpc CreateLearningPath(LearningPath) returns (ReqID) {
     option (google.api.http) = {
       post: "/learning_path"
       body    : "*"
     };
   }
-  rpc UpdateLearningPath(LearningPath) returns (ResOK) {
+  rpc UpdateLearningPath(LearningPath) returns (ReqID) {
     option (google.api.http) = {
       put: "/learning_path"
       body    : "*"
     };
   }
-  rpc DeleteLearningPath(ReqID) returns (ResOK) {
+  rpc DeleteLearningPath(ReqID) returns (ReqID) {
     option (google.api.http) = {
       delete: "/learning_path/{ID}"
     };

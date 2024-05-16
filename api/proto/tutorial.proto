@@ -13,19 +13,19 @@ import "content.proto";
 
 
 service TutorialService {
-  rpc CreateTutorial(Tutorial) returns (ResOK) {
+  rpc CreateTutorial(Tutorial) returns (ReqID) {
     option (google.api.http) = {
       post: "/tutorial"
       body    : "*"
     };
   }
-  rpc UpdateTutorial(Tutorial) returns (ResOK) {
+  rpc UpdateTutorial(Tutorial) returns (ReqID) {
     option (google.api.http) = {
       put: "/tutorial"
       body    : "*"
     };
   }
-  rpc DeleteTutorial(ReqID) returns (ResOK) {
+  rpc DeleteTutorial(ReqID) returns (ReqID) {
     option (google.api.http) = {
       delete: "/tutorial/{ID}"
     };

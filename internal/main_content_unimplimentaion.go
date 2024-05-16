@@ -37,7 +37,7 @@ func GetGlobalConfig() *GlobalConfig {
 
 	return &GlobalConfig{
 		Db_config:    database.GetConfig(),
-		Cache_Config: cache.NewCacheConfig(redis_addr), //TODO: Get from env
+		Cache_Config: cache.NewCacheConfig(redis_addr), 
 	}
 }
 

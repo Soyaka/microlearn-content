@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VideoSeriesServiceClient interface {
-	CreateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ResOK, error)
-	UpdateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ResOK, error)
-	DeleteVideoSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ReqID, error)
+	UpdateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ReqID, error)
+	DeleteVideoSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetVideoSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*VideoSeries, error)
 }
 
@@ -36,8 +36,8 @@ func NewVideoSeriesServiceClient(cc grpc.ClientConnInterface) VideoSeriesService
 	return &videoSeriesServiceClient{cc}
 }
 
-func (c *videoSeriesServiceClient) CreateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *videoSeriesServiceClient) CreateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/VideoSeriesService/CreateVideoSeries", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *videoSeriesServiceClient) CreateVideoSeries(ctx context.Context, in *Vi
 	return out, nil
 }
 
-func (c *videoSeriesServiceClient) UpdateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *videoSeriesServiceClient) UpdateVideoSeries(ctx context.Context, in *VideoSeries, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/VideoSeriesService/UpdateVideoSeries", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *videoSeriesServiceClient) UpdateVideoSeries(ctx context.Context, in *Vi
 	return out, nil
 }
 
-func (c *videoSeriesServiceClient) DeleteVideoSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *videoSeriesServiceClient) DeleteVideoSeries(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/VideoSeriesService/DeleteVideoSeries", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *videoSeriesServiceClient) GetVideoSeries(ctx context.Context, in *ReqID
 // All implementations must embed UnimplementedVideoSeriesServiceServer
 // for forward compatibility
 type VideoSeriesServiceServer interface {
-	CreateVideoSeries(context.Context, *VideoSeries) (*ResOK, error)
-	UpdateVideoSeries(context.Context, *VideoSeries) (*ResOK, error)
-	DeleteVideoSeries(context.Context, *ReqID) (*ResOK, error)
+	CreateVideoSeries(context.Context, *VideoSeries) (*ReqID, error)
+	UpdateVideoSeries(context.Context, *VideoSeries) (*ReqID, error)
+	DeleteVideoSeries(context.Context, *ReqID) (*ReqID, error)
 	GetVideoSeries(context.Context, *ReqID) (*VideoSeries, error)
 	mustEmbedUnimplementedVideoSeriesServiceServer()
 }
@@ -87,13 +87,13 @@ type VideoSeriesServiceServer interface {
 type UnimplementedVideoSeriesServiceServer struct {
 }
 
-func (UnimplementedVideoSeriesServiceServer) CreateVideoSeries(context.Context, *VideoSeries) (*ResOK, error) {
+func (UnimplementedVideoSeriesServiceServer) CreateVideoSeries(context.Context, *VideoSeries) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateVideoSeries not implemented")
 }
-func (UnimplementedVideoSeriesServiceServer) UpdateVideoSeries(context.Context, *VideoSeries) (*ResOK, error) {
+func (UnimplementedVideoSeriesServiceServer) UpdateVideoSeries(context.Context, *VideoSeries) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateVideoSeries not implemented")
 }
-func (UnimplementedVideoSeriesServiceServer) DeleteVideoSeries(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedVideoSeriesServiceServer) DeleteVideoSeries(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteVideoSeries not implemented")
 }
 func (UnimplementedVideoSeriesServiceServer) GetVideoSeries(context.Context, *ReqID) (*VideoSeries, error) {

@@ -2,44 +2,57 @@ package internal
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	content "github.com/Soyaka/microlearn-content/api/protogen/golang"
 )
 
-func (c *ContentService) CreateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ResOK, error) {
+func (c *ContentService) CreateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ReqID, error) {
+
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-
-	ok, err := c.Db.CreateTutorialPage(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	if in == nil {
+		return nil, errors.New("tutorial page cannot be nil")
+	}
+	result, err := c.Db.CreateTutorialPage(ctox, in)
+	if err != nil || result == nil {
+		return &content.ReqID{ID: ""}, err
 	}
 	c.Cache.SetTutorialPageToCache(ctox, in)
-	return ok, nil
+	return result, nil
+
 }
 
-func (c *ContentService) UpdateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ResOK, error) {
+func (c *ContentService) UpdateTutorialPage(ctx context.Context, in *content.TutorialPage) (*content.ReqID, error) {
 
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.UpdateTutorialPage(ctox, in)
-	if err != nil || !ok.OK {	
-		return &content.ResOK{OK: false}, err
+	if in == nil {
+		return nil, errors.New("tutorial page cannot be nil")
+	}
+	result, err := c.Db.UpdateTutorialPage(ctox, in)
+	if err != nil || result == nil {
+		return &content.ReqID{ID: ""}, err
 	}
 	c.Cache.SetTutorialPageToCache(ctox, in)
-	return ok, nil
+	return result, nil
 }
 
-func (c *ContentService) DeleteTutorialPage(ctx context.Context, in *content.ReqID) (*content.ResOK, error) {
+func (c *ContentService) DeleteTutorialPage(ctx context.Context, in *content.ReqID) (*content.ReqID, error) {
+
 	ctox, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	ok, err := c.Db.DeleteTutorialPage(ctox, in)
-	if err != nil || !ok.OK {
-		return &content.ResOK{OK: false}, err
+	if in == nil {
+		return nil, errors.New("tutorial page cannot be nil")
 	}
-	c.Cache.DeleteFromCache(ctox, in.ID)
-	return ok, nil
+	result, err := c.Db.DeleteTutorialPage(ctox, in)
+	if err != nil || result == nil {
+		return &content.ReqID{ID: ""}, err
+	}
+	c.Cache.DeleteFromCache(ctox, in.GetID())
+	return result, nil
+
 
 }
 

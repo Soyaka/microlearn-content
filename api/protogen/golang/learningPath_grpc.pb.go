@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LearningPathServiceClient interface {
-	CreateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ResOK, error)
-	UpdateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ResOK, error)
-	DeleteLearningPath(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error)
+	CreateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ReqID, error)
+	UpdateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ReqID, error)
+	DeleteLearningPath(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error)
 	GetLearningPath(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*LearningPath, error)
 }
 
@@ -36,8 +36,8 @@ func NewLearningPathServiceClient(cc grpc.ClientConnInterface) LearningPathServi
 	return &learningPathServiceClient{cc}
 }
 
-func (c *learningPathServiceClient) CreateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *learningPathServiceClient) CreateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/LearningPathService/CreateLearningPath", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (c *learningPathServiceClient) CreateLearningPath(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *learningPathServiceClient) UpdateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *learningPathServiceClient) UpdateLearningPath(ctx context.Context, in *LearningPath, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/LearningPathService/UpdateLearningPath", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +54,8 @@ func (c *learningPathServiceClient) UpdateLearningPath(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *learningPathServiceClient) DeleteLearningPath(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ResOK, error) {
-	out := new(ResOK)
+func (c *learningPathServiceClient) DeleteLearningPath(ctx context.Context, in *ReqID, opts ...grpc.CallOption) (*ReqID, error) {
+	out := new(ReqID)
 	err := c.cc.Invoke(ctx, "/LearningPathService/DeleteLearningPath", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func (c *learningPathServiceClient) GetLearningPath(ctx context.Context, in *Req
 // All implementations must embed UnimplementedLearningPathServiceServer
 // for forward compatibility
 type LearningPathServiceServer interface {
-	CreateLearningPath(context.Context, *LearningPath) (*ResOK, error)
-	UpdateLearningPath(context.Context, *LearningPath) (*ResOK, error)
-	DeleteLearningPath(context.Context, *ReqID) (*ResOK, error)
+	CreateLearningPath(context.Context, *LearningPath) (*ReqID, error)
+	UpdateLearningPath(context.Context, *LearningPath) (*ReqID, error)
+	DeleteLearningPath(context.Context, *ReqID) (*ReqID, error)
 	GetLearningPath(context.Context, *ReqID) (*LearningPath, error)
 	mustEmbedUnimplementedLearningPathServiceServer()
 }
@@ -87,13 +87,13 @@ type LearningPathServiceServer interface {
 type UnimplementedLearningPathServiceServer struct {
 }
 
-func (UnimplementedLearningPathServiceServer) CreateLearningPath(context.Context, *LearningPath) (*ResOK, error) {
+func (UnimplementedLearningPathServiceServer) CreateLearningPath(context.Context, *LearningPath) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLearningPath not implemented")
 }
-func (UnimplementedLearningPathServiceServer) UpdateLearningPath(context.Context, *LearningPath) (*ResOK, error) {
+func (UnimplementedLearningPathServiceServer) UpdateLearningPath(context.Context, *LearningPath) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLearningPath not implemented")
 }
-func (UnimplementedLearningPathServiceServer) DeleteLearningPath(context.Context, *ReqID) (*ResOK, error) {
+func (UnimplementedLearningPathServiceServer) DeleteLearningPath(context.Context, *ReqID) (*ReqID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLearningPath not implemented")
 }
 func (UnimplementedLearningPathServiceServer) GetLearningPath(context.Context, *ReqID) (*LearningPath, error) {
