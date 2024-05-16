@@ -14,8 +14,6 @@ require (
 )
 
 require (
-	github.com/Soyaka/microlearn-entitment v0.0.0-20240510171408-df8ec98a7ca6 // indirect
-	github.com/Soyaka/microlearn-user v0.0.0-20240515001453-9829cdec0cac // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/golang/snappy v0.0.4 // indirect

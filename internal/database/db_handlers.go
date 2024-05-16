@@ -142,7 +142,7 @@ func (c *Service) UpdateCourseSeries(ctx context.Context, in *content.Course) (*
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
 
-	result, err := c.Client.Database(DATA).Collection(CourseCol).UpdateOne(context, bson.M{"_id": in.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(CourseCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
 	if err != nil || result.MatchedCount == 0 {
 		return &content.ResOK{OK: false}, err
 	}
@@ -193,7 +193,7 @@ func (c *Service) CreateVideoSeries(ctx context.Context, in *content.VideoSeries
 func (c *Service) UpdateVideoSeries(ctx context.Context, in *content.VideoSeries) (*content.ResOK, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).UpdateOne(context, bson.M{"_id": in.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(VideoSeriesCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
 	if err != nil || result.MatchedCount == 0 {
 		return &content.ResOK{OK: false}, err
 	}
@@ -249,7 +249,7 @@ func (c *Service) CreateLearningPath(ctx context.Context, in *content.LearningPa
 func (c *Service) UpdateLearningPath(ctx context.Context, in *content.LearningPath) (*content.ResOK, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(LearningCol).UpdateOne(context, bson.M{"_id": in.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(LearningCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
 	if err != nil || result.MatchedCount == 0 {
 		return &content.ResOK{OK: false}, err
 	}
@@ -311,7 +311,7 @@ func (c *Service) CreatePodcast(ctx context.Context, in *content.Podcast) (*cont
 func (c *Service) UpdatePodcast(ctx context.Context, in *content.Podcast) (*content.ResOK, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(PodcastCol).UpdateOne(context, bson.M{"_id": in.Id}, in)
+	result, err := c.Client.Database(DATA).Collection(PodcastCol).UpdateOne(context, bson.M{"_id": in.ContentInfo.Id}, in)
 	if err != nil || result.MatchedCount == 0 {
 		return &content.ResOK{OK: false}, err
 	}
@@ -370,7 +370,7 @@ func (c *Service) CreateTutorial(ctx context.Context, in *content.Tutorial) (*co
 func (c *Service) UpdateTutorial(ctx context.Context, in *content.Tutorial) (*content.ResOK, error) {
 	context, cancel := context.WithTimeout(ctx, TimeOut)
 	defer cancel()
-	result, err := c.Client.Database(DATA).Collection(TutorialCol).UpdateOne(context, in.Id, in)
+	result, err := c.Client.Database(DATA).Collection(TutorialCol).UpdateOne(context, in.ContentInfo.Id, in)
 	if err != nil || result.MatchedCount == 0 {
 		return &content.ResOK{OK: false}, err
 	}

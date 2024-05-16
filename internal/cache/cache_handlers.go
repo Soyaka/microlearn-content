@@ -97,7 +97,7 @@ func (c *Cache) SetCourseToCache(ctx context.Context, course *content.Course) er
 	if err != nil {
 		return err
 	}
-	err = c.Client.Set(ctox, course.Id, res, CacheOut).Err()
+	err = c.Client.Set(ctox, course.ContentInfo.Id, res, CacheOut).Err()
 	if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (c *Cache) SetCourseSeriesToCache(ctx context.Context, courseSeries *conten
 	if err != nil {
 		return err
 	}
-	err = c.Client.Set(ctox, courseSeries.Id, res, CacheOut).Err()
+	err = c.Client.Set(ctox, courseSeries.ContentInfo.Id, res, CacheOut).Err()
 	if err != nil {
 		return err
 	}
@@ -207,7 +207,7 @@ func (c *Cache) SetVideoSeriesToCache(ctx context.Context, videoSeries *content.
 	if err != nil {
 		return err
 	}
-	err = c.Client.Set(ctox, videoSeries.Id, res, CacheOut).Err()
+	err = c.Client.Set(ctox, videoSeries.ContentInfo.Id, res, CacheOut).Err()
 	if err != nil {
 		return err
 	}
@@ -245,7 +245,7 @@ func (c *Cache) SetTutorialToCache(ctx context.Context, tutorial *content.Tutori
 		return err
 	}
 
-	err = c.Client.Set(ctox, tutorial.Id, res, CacheOut).Err()
+	err = c.Client.Set(ctox, tutorial.ContentInfo.Id, res, CacheOut).Err()
 	if err != nil {
 		return err
 	}
@@ -282,7 +282,7 @@ func (c *Cache) SetLearningPathToCache(ctx context.Context, learningPath *conten
 	if err != nil {
 		return err
 	}
-	err = c.Client.Set(ctox, learningPath.Id, res, CacheOut).Err()
+	err = c.Client.Set(ctox, learningPath.ContentInfo.Id, res, CacheOut).Err()
 	if err != nil {
 		return err
 	}
@@ -321,7 +321,7 @@ func (c *Cache) SetPodcastToCache(ctx context.Context, podcast *content.Podcast)
 	if err != nil {
 		return err
 	}
-	err = c.Client.Set(ctox, podcast.Id, res, CacheOut).Err()
+	err = c.Client.Set(ctox, podcast.ContentInfo.Id, res, CacheOut).Err()
 	if err != nil {
 		return err
 	}
